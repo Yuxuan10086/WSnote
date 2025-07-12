@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日程安排系统原型</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      color: #1f2937;
+    }
+    header {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .container {
+      padding: 2rem;
+    }
+    .tabs button {
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      border-radius: 0.25rem;
+    }
+    .tabs button.active {
+      background-color: #2563eb;
+      color: white;
+    }
+    .tabs button:not(.active) {
+      background-color: #e5e7eb;
+    }
+    section {
+      background: white;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .gantt-grid {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .gantt-left div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .gantt-right {
+      position: relative;
+      height: 100px;
+    }
+    .bar {
+      position: absolute;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      color: white;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .bar.blue { background-color: #3b82f6; }
+    .bar.green { background-color: #10b981; top: 40px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #d1d5db;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    #modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    #modalContent {
+      background: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      width: 300px;
+    }
+    input, textarea, select {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.25rem;
+    }
+    .todo ul {
+      padding-left: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>日程安排系统</h1>
+    <button onclick="alert('登录功能暂未实现')">登录</button>
+  </header>
+  <div class="container">
+    <div class="tabs">
+      <button class="active" onclick="switchTab('macro')">宏观日程</button>
+      <button onclick="switchTab('micro')">微观日程</button>
+    </div>
+
+    <!-- 宏观日程 -->
+    <section id="macro">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2>项目甘特图A</h2>
+        <button onclick="openModal()">+ 添加任务</button>
+      </div>
+      <div style="margin-top:1rem;text-align:center;font-size:14px;color:gray;">
+        <div>第32周 | 第33周</div>
+        <div>周一 ~ 周日</div>
+        <div>7月12日 ~ 7月18日</div>
+      </div>
+      <div class="gantt-grid">
+        <div class="gantt-left">
+          <div><span>任务A</span><span>80%</span></div>
+          <div><span>任务B</span><span>30%</span></div>
+        </div>
+        <div class="gantt-right">
+          <div class="bar blue" style="left: 10%; width: 30%;">任务A</div>
+          <div class="bar green" style="left: 40%; width: 20%;">任务B</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 微观日程 -->
+    <section id="micro" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2>2025年7月12日 · 微观日程</h2>
+        <button onclick="alert('新建日程功能暂未实现')">+ 创建日程</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>时</th><th>分</th><th>事件</th><th>地点</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9</td><td>00</td><td>晨会</td><td>会议室1</td><td>准备汇报</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="todo">
+        <h3>待办清单</h3>
+        <ul>
+          <li>准备项目PPT</li>
+          <li>联系设计师</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- 添加任务弹窗 -->
+  <div id="modal">
+    <div id="modalContent">
+      <h2>添加任务</h2>
+      <input type="text" placeholder="任务名称">
+      <input type="date" placeholder="开始时间">
+      <input type="date" placeholder="结束时间">
+      <input type="number" placeholder="工期（天）">
+      <textarea placeholder="备注"></textarea>
+      <select>
+        <option>蓝色</option>
+        <option>绿色</option>
+        <option>橙色</option>
+        <option>紫色</option>
+        <option>灰色</option>
+      </select>
+      <div style="text-align:right;">
+        <button onclick="closeModal()">取消</button>
+        <button onclick="closeModal()">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.getElementById('macro').style.display = tab === 'macro' ? 'block' : 'none';
+      document.getElementById('micro').style.display = tab === 'micro' ? 'block' : 'none';
+      const buttons = document.querySelectorAll('.tabs button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.tabs button[onclick*="${tab}"]`).classList.add('active');
+    }
+    function openModal() {
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
