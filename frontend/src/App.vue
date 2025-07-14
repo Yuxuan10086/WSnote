@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <PageHeader v-if="isLogin" />
+  <div class="contentBackground">
+    <RouterView />
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="js">
+import { useUserStore } from '@/stores/user'
+import PageHeader from '@/components/PageHeader.vue'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    PageHeader,
+  },
+  data() {
+    return {
+      isLogin: false,
+    }
+  },
+  created() {
+    const userStore = useUserStore()
+    this.isLogin = userStore.isLoggedIn
+    console.log(userStore.isLoggedIn, userStore.userName)
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.contentBackground {
+  background-color: var(--gray-light);
+  width: 100%;
+  min-height: 100vh;
 }
 </style>

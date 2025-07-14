@@ -1,0 +1,33 @@
+/* ========= main.css ========= */
+/* 项目主题与通用全局样式定义 */
+
+:root {
+  --primary-color: #017fbc;
+  --primary-hover: #026ba3;
+  --primary-light: #4da5d8;
+  --primary-lighter: #99cde7;
+  --primary-dark: #015f8d;
+  --primary-darker: #013f5e;
+  --background: #f8f9fa;
+  --foreground: #ffffff;
+  --text-color: #222;
+  --muted-text: #666;
+  /* --border-radius: 6px; */
+  /* --shadow: 0 2px 8px rgba(0, 0, 0, 0.08); */
+  --gray-light: #f0f5f8; /* 浅灰色，略带主色调，用于最浅的 UI 区块 */
+  --gray-medium: #dce9f0; /* 中等灰色，略带主色调，用于中间层级的 UI 区块 */
+  --gray-dark: #cddde7; /* 深灰色，略带主色调，用于需要突出层级的 UI 区块 */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+/* 标题样式 */
+h1,
+h2,
+h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5em;
+}
